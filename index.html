@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Satara Ecotourism Platform - Book eco-stays, rural homestays, and shop authentic local products">
+    <title>Satara Ecotourism - Sustainable Travel Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c2c 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .lang-btn.active {
+            background: #fff;
+            color: #2d5016;
+        }
+
+        .lang-btn:hover {
+            background: #fff;
+            color: #2d5016;
+        }
+
+        .cart-icon {
+            position: relative;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ffd700;
+            color: #2d5016;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), 
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Pratapgad-Satara-Maharashtra-O0A0951.jpg/2560px-Pratapgad-Satara-Maharashtra-O0A0951.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            margin-top: 70px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #2d5016;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: #4a7c2c;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: #2d5016;
+        }
+
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2d5016;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* BOOKING SYSTEM */
+        .booking-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .property-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .property-info {
+            padding: 1.5rem;
+        }
+
+        .property-type {
+            display: inline-block;
+            background: #4a7c2c;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-name {
+            font-size: 1.5rem;
+            color: #2d5016;
+            margin: 0.5rem 0;
+        }
+
+        .property-location {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .property-features {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: #f0f8f0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #2d5016;
+        }
+
+        .property-rating {
+            color: #ffd700;
+            margin: 0.5rem 0;
+        }
+
+        .property-price {
+            font-size: 1.5rem;
+            color: #4a7c2c;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* MARKETPLACE */
+        .marketplace-filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: #f5f5f5;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .filter-btn.active {
+            background: #4a7c2c;
+            color: #fff;
+            border-color: #4a7c2c;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            color: #4a7c2c;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            color: #2d5016;
+            margin: 0.5rem 0;
+        }
+
+        .seller-info {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .product-rating {
+            color: #ffd700;
+            margin: 0.5rem 0;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            color: #4a7c2c;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .delivery-badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2d5016;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
+        }
+
+        /* EDUCATIONAL CONTENT */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .education-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .education-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .education-content {
+            padding: 2rem;
+        }
+
+        .education-badge {
+            display: inline-block;
+            background: #4a7c2c;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .education-card h3 {
+            color: #2d5016;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            margin: 1rem 0;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Ensure videos are responsive */
+        @media (max-width: 768px) {
+            .video-container {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* REVIEWS & COMMUNITY */
+        .review-section {
+            background: linear-gradient(135deg, #f0f8f0 0%, #e6f3e6 100%);
+        }
+
+        .review-form {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d5016;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .star {
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.2s;
+        }
+
+        .star.active,
+        .star:hover {
+            color: #ffd700;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .review-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .review-card p {
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4a7c2c 0%, #6b9b42 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .reviewer-details {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: bold;
+            color: #2d5016;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .review-rating {
+            color: #ffd700;
+            margin: 0.5rem 0;
+        }
+
+        .review-text {
+            color: #333;
+            line-height: 1.8;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        #bookingModal .modal-content,
+        #orderModal .modal-content {
+            max-width: 700px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .cart-items {
+            margin: 2rem 0;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-total {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d5016;
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        .info-box {
+            background: #f0f8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #4a7c2c;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #ffd700;
+        }
+
+        .footer {
+            background: #1a2f0e;
+            color: #fff;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #2d5016;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                height: 70vh;
+                margin-top: 60px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section {
+                padding: 2.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.9rem;
+                margin-bottom: 2rem;
+            }
+
+            /* Show 2 columns on mobile for most content */
+            .booking-grid, 
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            /* Reviews can also be 2 columns on mobile */
+            .education-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .reviews-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            /* Compact cards on mobile */
+            .property-card,
+            .product-card {
+                max-width: 100%;
+            }
+
+            .property-image,
+            .product-image {
+                height: 140px;
+            }
+
+            .property-info,
+            .product-info {
+                padding: 1rem;
+            }
+
+            .property-name,
+            .product-name {
+                font-size: 1.1rem;
+            }
+
+            .property-features,
+            .product-rating {
+                font-size: 0.85rem;
+            }
+
+            .feature-tag {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.75rem;
+            }
+
+            .property-price,
+            .product-price {
+                font-size: 1.2rem;
+            }
+
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .marketplace-filters {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 0.5rem;
+                max-height: 85vh;
+            }
+
+            .education-card,
+            .review-card {
+                max-width: 100%;
+            }
+
+            .review-card {
+                padding: 1rem;
+            }
+
+            .review-card p {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+
+            .reviewer-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .reviewer-name {
+                font-size: 0.95rem;
+            }
+
+            .review-date {
+                font-size: 0.75rem;
+            }
+
+            .education-image {
+                height: 150px;
+            }
+
+            .education-content {
+                padding: 1.5rem;
+            }
+
+            .education-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .education-card p {
+                font-size: 0.9rem;
+                line-height: 1.6;
+            }
+
+            .lang-selector {
+                flex-wrap: wrap;
+                gap: 0.3rem;
+            }
+
+            .lang-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .cart-icon {
+                font-size: 1.3rem;
+            }
+
+            .form-group label {
+                font-size: 0.95rem;
+            }
+
+            .info-box,
+            .warning-box {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .info-box ul,
+            .warning-box ul {
+                font-size: 0.85rem;
+            }
+
+            .delivery-badge {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .product-category {
+                font-size: 0.75rem;
+            }
+
+            .seller-info {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Small mobile phones (320px - 480px) - Keep 2 columns but more compact */
+        @media (max-width: 480px) {
+            .hero {
+                height: 50vh;
+                margin-top: 60px;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-content {
+                padding: 1rem;
+            }
+
+            .section {
+                padding: 2rem 0.5rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .section-subtitle {
+                font-size: 0.85rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .booking-grid, 
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .reviews-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .education-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .property-image,
+            .product-image {
+                height: 120px;
+            }
+
+            .property-info,
+            .product-info {
+                padding: 0.75rem;
+            }
+
+            .property-name,
+            .product-name {
+                font-size: 1rem;
+                margin: 0.3rem 0;
+            }
+
+            .property-features {
+                gap: 0.5rem;
+                margin: 0.5rem 0;
+            }
+
+            .feature-tag {
+                font-size: 0.7rem;
+            }
+
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .modal-content {
+                padding: 1rem;
+                margin: 0.5rem;
+            }
+
+            .education-content,
+            .review-card {
+                padding: 1rem;
+            }
+
+            .review-card p {
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+
+            .review-rating {
+                font-size: 0.85rem;
+            }
+
+            .reviewer-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .footer {
+                padding: 2rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .booking-grid, 
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+
+            .education-grid,
+            .reviews-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+
+            .section {
+                padding: 4rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Landscape mobile phones (481px - 768px) - Show 3 columns */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .booking-grid, 
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+
+            .property-image,
+            .product-image {
+                height: 160px;
+            }
+
+            .section {
+                padding: 3rem 1.5rem;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .booking-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                max-width: 1400px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                max-width: 1400px;
+            }
+
+            .education-grid,
+            .reviews-grid {
+                grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+                max-width: 1400px;
+            }
+
+            .section {
+                padding: 5rem 3rem;
+            }
+
+            .modal-content {
+                max-width: 700px;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Extra large screens */
+        @media (min-width: 1400px) {
+            .section {
+                max-width: 1600px;
+                margin: 0 auto;
+                padding: 5rem 4rem;
+            }
+
+            .hero-content {
+                max-width: 900px;
+            }
+        }
+
+        /* Ensure consistent sizing across all devices */
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        button, .btn {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        /* Better touch targets for mobile */
+        @media (max-width: 768px) {
+            .btn {
+                min-height: 44px;
+                padding: 0.8rem 2rem;
+            }
+
+            input, select, textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Fix for iOS Safari */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🌿 <span data-translate-key="logoText">Satara Ecotourism</span></div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="closeMenu()"><span data-translate-key="home">Home</span></a></li>
+            <li><a href="#booking" onclick="closeMenu()"><span data-translate-key="bookStay">Book Stay</span></a></li>
+            <li><a href="#marketplace" onclick="closeMenu()"><span data-translate-key="shop">Shop</span></a></li>
+            <li><a href="#education" onclick="closeMenu()"><span data-translate-key="learn">Learn</span></a></li>
+            <li><a href="#community" onclick="closeMenu()"><span data-translate-key="community">Community</span></a></li>
+        </ul>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <div class="lang-selector">
+                <button class="lang-btn active" onclick="changeLanguage('en')">EN</button>
+                <button class="lang-btn" onclick="changeLanguage('mr')">मराठी</button>
+                <button class="lang-btn" onclick="changeLanguage('hi')">हिंदी</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 data-translate-key="heroTitle">Discover Sustainable Satara</h1>
+            <p data-translate-key="heroSubtitle">Experience authentic rural life, support local communities, and explore nature responsibly</p>
+            <a href="#booking" class="btn btn-primary"><span data-translate-key="startJourney">Start Your Journey</span></a>
+        </div>
+    </section>
+
+    <!-- BOOKING SECTION -->
+    <section class="section" id="booking">
+        <h2 class="section-title"><span data-translate-key="ecoStaysTitle">Eco-Stays & Rural Homestays</span></h2>
+        <p class="section-subtitle"><span data-translate-key="ecoStaysSubtitle">Authentic accommodations that support local families and preserve traditional culture</span></p>
+        
+        <div class="booking-grid">
+            <div class="property-card">
+                <img src="https://r1imghtlak.mmtcdn.com/d36d740a334311eb83710242ac110002.jpeg" alt="Eco Stay" class="property-image">
+                <div class="property-info">
+                    <span class="property-type" data-en="Eco-Stay" data-mr="इको-स्टे" data-hi="इको-स्टे">Eco-Stay</span>
+                    <h3 class="property-name" data-en="Green Valley Retreat" data-mr="ग्रीन व्हॅली रिट्रीट" data-hi="ग्रीन वैली रिट्रीट">Green Valley Retreat</h3>
+                    <p class="property-location">📍 Sajjangad, Satara</p>
+                    <div class="property-features">
+                        <span class="feature-tag" data-en="♻️ Solar Power" data-mr="♻️ सौर ऊर्जा" data-hi="♻️ सौर ऊर्जा">♻️ Solar Power</span>
+                        <span class="feature-tag" data-en="🌾 Organic Farm" data-mr="🌾 सेंद्रिय शेत" data-hi="🌾 जैविक खेत">🌾 Organic Farm</span>
+                        <span class="feature-tag" data-en="🚿 Rainwater Harvest" data-mr="🚿 पावसाचे पाणी संचयन" data-hi="🚿 वर्षा जल संचयन">🚿 Rainwater Harvest</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐⭐ (4.9) • <span data-en="127 reviews" data-mr="127 पुनरावलोकने" data-hi="127 समीक्षाएं">127 reviews</span></div>
+                    <div class="product-price">₹2,500 <span style="font-size: 0.9rem; color: #666;" data-en="/night" data-mr="/रात्र" data-hi="/रात">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Green Valley Retreat', 2500)"><span data-en="Book Now" data-mr="आता बुक करा" data-hi="अभी बुक करें">Book Now</span></button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://images.travelandleisureasia.com/wp-content/uploads/sites/2/2024/08/13121114/Chalkewadi-whoosh.jpg" alt="Homestay" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Rural Homestay</span>
+                    <h3 class="property-name">Patil Family Farm</h3>
+                    <p class="property-location">📍 Kaas Plateau, Satara</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🏡 Traditional Home</span>
+                        <span class="feature-tag">🍲 Home Cooked Meals</span>
+                        <span class="feature-tag">🎨 Cultural Activities</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐⭐ (5.0) • 89 reviews</div>
+                    <div class="product-price">₹1,800 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Patil Family Farm', 1800)">Book Now</button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://nomadsofindia.com/wp-content/uploads/2022/07/Thoseghar-waterfalls-1.jpg" alt="Nature Lodge" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Eco-Stay</span>
+                    <h3 class="property-name">Waterfall View Lodge</h3>
+                    <p class="property-location">📍 Thosegarh, Satara</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🏞️ Nature Trails</span>
+                        <span class="feature-tag">🦜 Bird Watching</span>
+                        <span class="feature-tag">♻️ Zero Waste</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐ (4.8) • 64 reviews</div>
+                    <div class="product-price">₹3,200 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Waterfall View Lodge', 3200)">Book Now</button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://www.saffronstays.com/_next/image?url=https%3A%2F%2Fik.imagekit.io%2F5tgxhsqev%2Fsaffronstays-media%2F1757583909652456915%3Ftr%3Dw-800%2Ch-500%2Cq-90%2Cf-auto&w=828&q=75" alt="Mountain Cottage" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Eco-Stay</span>
+                    <h3 class="property-name">Mountain Mist Cottage</h3>
+                    <p class="property-location">📍 Panchgani, Satara</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🌄 Valley Views</span>
+                        <span class="feature-tag">🔥 Bonfire Setup</span>
+                        <span class="feature-tag">🚴 Cycling Tours</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐⭐ (4.9) • 103 reviews</div>
+                    <div class="product-price">₹2,800 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Mountain Mist Cottage', 2800)">Book Now</button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://content.jdmagicbox.com/v2/comp/satara/m7/9999p2162.2162.220319015118.u8m7/catalogue/sunrise-villa-wai-shahbaug-satara-farm-house-on-rent-p39ujl0xw1-250.jpg" alt="Farmstay" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Rural Homestay</span>
+                    <h3 class="property-name">Sunrise Organic Farm</h3>
+                    <p class="property-location">📍 Wai, Satara</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🌾 Farm Experience</span>
+                        <span class="feature-tag">🥛 Fresh Dairy</span>
+                        <span class="feature-tag">🧘 Yoga Sessions</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐⭐ (5.0) • 78 reviews</div>
+                    <div class="product-price">₹2,000 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Sunrise Organic Farm', 2000)">Book Now</button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://content.jdmagicbox.com/v2/comp/satara/m7/9999p2162.2162.170520121515.t3m7/catalogue/heritage-wadi-satara-city-satara-ac-lodging-services-4ehu68cxmn.jpg" alt="Heritage Home" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Rural Homestay</span>
+                    <h3 class="property-name">Heritage Village Home</h3>
+                    <p class="property-location">📍 Satara City</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🏛️ 150 Years Old</span>
+                        <span class="feature-tag">🎭 Folk Dance</span>
+                        <span class="feature-tag">🍛 Cooking Classes</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐ (4.7) • 92 reviews</div>
+                    <div class="product-price">₹2,200 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Heritage Village Home', 2200)">Book Now</button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://nomadsaikat.com/wp-content/uploads/2023/11/Koyna-Wildlife-Sanctuary_5.webp" alt="Jungle Resort" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Eco-Stay</span>
+                    <h3 class="property-name">Wild Woods Eco Resort</h3>
+                    <p class="property-location">📍 Koyna Wildlife Sanctuary</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🐾 Wildlife Tours</span>
+                        <span class="feature-tag">🏕️ Camp Fires</span>
+                        <span class="feature-tag">🌳 Nature Walks</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐⭐ (4.9) • 141 reviews</div>
+                    <div class="product-price">₹3,500 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Wild Woods Eco Resort', 3500)">Book Now</button>
+                </div>
+            </div>
+
+            <div class="property-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQivaL09PRfFkNvttcsaaHYJyfW0XSgusk170MIPXZFswBRV26lQui-ds-BPY6nncqAbYs&usqp=CAU" alt="Riverside Cottage" class="property-image">
+                <div class="property-info">
+                    <span class="property-type">Eco-Stay</span>
+                    <h3 class="property-name">Riverside Serenity</h3>
+                    <p class="property-location">📍 Krishna River, Satara</p>
+                    <div class="property-features">
+                        <span class="feature-tag">🏞️ River View</span>
+                        <span class="feature-tag">🎣 Fishing</span>
+                        <span class="feature-tag">🛶 Kayaking</span>
+                    </div>
+                    <div class="property-rating">⭐⭐⭐⭐ (4.6) • 56 reviews</div>
+                    <div class="product-price">₹2,600 <span style="font-size: 0.9rem; color: #666;">/night</span></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="bookProperty('Riverside Serenity', 2600)">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARKETPLACE SECTION -->
+    <section class="section" id="marketplace">
+        <h2 class="section-title"><span data-translate-key="marketplaceTitle">Local Marketplace</span></h2>
+        <p class="section-subtitle"><span data-translate-key="marketplaceSubtitle">Support rural entrepreneurs by purchasing authentic handicrafts and organic products with nationwide delivery</span></p>
+        
+        <div class="marketplace-filters">
+            <button class="filter-btn active" onclick="filterProducts('all')"><span data-translate-key="allProducts">All Products</span></button>
+            <button class="filter-btn" onclick="filterProducts('handicrafts')"><span data-translate-key="handicrafts">Handicrafts</span></button>
+            <button class="filter-btn" onclick="filterProducts('organic')"><span data-translate-key="organicFood">Organic Food</span></button>
+            <button class="filter-btn" onclick="filterProducts('textiles')"><span data-translate-key="textiles">Textiles</span></button>
+            <button class="filter-btn" onclick="filterProducts('wellness')"><span data-translate-key="wellness">Wellness</span></button>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+            <div class="product-card" data-category="handicrafts">
+                <img src="https://bamboochicshop.com/cdn/shop/files/Sa295e1d771bf440f96c3230c5c2ee26ak_517af472-3682-4308-bf13-9286bbf6e88c.webp?v=1728533079" alt="Baskets" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Handicrafts</p>
+                    <h3 class="product-name">Handwoven Bamboo Baskets</h3>
+                    <p class="seller-info">👤 By Kavita Artisans Collective</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (4.8) • 156 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 3-5 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Quality Certified • 🌱 Sustainable</p>
+                    <div class="product-price">₹450</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Handwoven Bamboo Baskets', 450, 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400', 'Kavita Artisans Collective')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="organic">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2024/9/451588467/PC/QU/BE/133926353/ginger-fresh-500x500.jpg" alt="Honey" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Organic Food</p>
+                    <h3 class="product-name">Wild Forest Honey (500g)</h3>
+                    <p class="seller-info">👤 By Satara Bee Keepers Co-op</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (5.0) • 234 sold</div>
+                    <div class="delivery-badge">🚚 Express Delivery • 2-3 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ 100% Pure • 🌿 Organic Certified</p>
+                    <div class="product-price">₹650</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Wild Forest Honey (500g)', 650, 'https://images.unsplash.com/photo-1587049352846-4a222e784e38?w=400', 'Satara Bee Keepers Co-op')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="handicrafts">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2021/1/XA/UR/IM/80298366/warli-painting-frames-1000x1000-500x500.jpg" alt="Warli Art" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Handicrafts</p>
+                    <h3 class="product-name">Warli Tribal Paintings</h3>
+                    <p class="seller-info">👤 By Rahul Tribal Art Studio</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (4.9) • 89 sold</div>
+                    <div class="delivery-badge">🚚 Secure Packaging • 5-7 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Authentic • 🎨 Traditional Method</p>
+                    <div class="product-price">₹1,200</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Warli Tribal Paintings', 1200, 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=400', 'Rahul Tribal Art Studio')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="textiles">
+                <img src="https://content.jdmagicbox.com/comp/def_content/saree-retailers/shutterstock-549956632-saree-retailers-5-1mthn-250.jpg" alt="Cotton Sarees" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Textiles</p>
+                    <h3 class="product-name">Handloom Cotton Saree</h3>
+                    <p class="seller-info">👤 By Women Weavers Collective</p>
+                    <div class="product-rating">⭐⭐⭐⭐ (4.7) • 67 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 4-6 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Handwoven • 🌿 Natural Dyes</p>
+                    <div class="product-price">₹2,800</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Handloom Cotton Saree', 2800, 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400', 'Women Weavers Collective')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="organic">
+                <img src="https://content.jdmagicbox.com/v2/comp/mumbai/i4/022pxx22.xx22.190620090434.i8i4/catalogue/society-tea-mumbai-tea-manufacturers-1r6cxeyo99.jpg" alt="Herbal Tea" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Organic Food</p>
+                    <h3 class="product-name">Mountain Herb Tea Mix</h3>
+                    <p class="seller-info">👤 By Satara Organic Farmers</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (4.9) • 178 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 3-5 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Organic • 🌿 Fresh Harvest</p>
+                    <div class="product-price">₹350</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Mountain Herb Tea Mix', 350, 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400', 'Satara Organic Farmers')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="handicrafts">
+                <img src="https://craftzone.in/backend/uploads/products/SKU0000003502/a45282501783671f28488447497dc294.webp" alt="Pottery" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Handicrafts</p>
+                    <h3 class="product-name">Traditional Clay Pottery Set</h3>
+                    <p class="seller-info">👤 By Village Potters Guild</p>
+                    <div class="product-rating">⭐⭐⭐⭐ (4.6) • 45 sold</div>
+                    <div class="delivery-badge">🚚 Fragile - Special Care • 6-8 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Handmade • 🌱 Eco-Friendly</p>
+                    <div class="product-price">₹890</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Traditional Clay Pottery Set', 890, 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400', 'Village Potters Guild')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="organic">
+                <img src="https://m.media-amazon.com/images/I/71V7El3oAjS.jpg" alt="Jaggery" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Organic Food</p>
+                    <h3 class="product-name">Organic Jaggery (1kg)</h3>
+                    <p class="seller-info">👤 By Sugarcane Farmers Co-op</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (4.8) • 210 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 2-4 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Chemical-Free • 🌿 Traditional Method</p>
+                    <div class="product-price">₹280</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Organic Jaggery (1kg)', 280, 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400', 'Sugarcane Farmers Co-op')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="textiles">
+                <img src="https://5.imimg.com/data5/SELLER/Default/2025/4/504706677/TD/UB/XA/187092061/printed-jute-bag-500x500.png" alt="Bags" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Textiles</p>
+                    <h3 class="product-name">Jute Shopping Bags (Set of 3)</h3>
+                    <p class="seller-info">👤 By Eco Craft Makers</p>
+                    <div class="product-rating">⭐⭐⭐⭐ (4.5) • 98 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 3-5 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Reusable • ♻️ Biodegradable</p>
+                    <div class="product-price">₹420</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Jute Shopping Bags (Set of 3)', 420, 'https://images.unsplash.com/photo-1608748644244-f4d2370875e9?w=400', 'Eco Craft Makers')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="wellness">
+                <img src="https://www.myamericannurse.com/wp-content/uploads/2021/08/shutterstock_461827699.jpg" alt="Essential Oils" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Wellness</p>
+                    <h3 class="product-name">Essential Oils Set (5 bottles)</h3>
+                    <p class="seller-info">👤 By Herbal Essence Co.</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (4.9) • 123 sold</div>
+                    <div class="delivery-badge">🚚 Express Delivery • 2-3 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Pure • 🌿 Therapeutic Grade</p>
+                    <div class="product-price">₹1,450</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Essential Oils Set (5 bottles)', 1450, 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400', 'Herbal Essence Co.')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="organic">
+                <img src="https://organicspiceshop.com/cdn/shop/collections/Spice_Collection.png?v=1740543507&width=1500" alt="Spices" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Organic Food</p>
+                    <h3 class="product-name">Organic Spice Collection</h3>
+                    <p class="seller-info">👤 By Spice Growers Alliance</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (5.0) • 187 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 3-5 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Farm Fresh • 🌿 No Additives</p>
+                    <div class="product-price">₹580</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Organic Spice Collection', 580, 'https://images.unsplash.com/photo-1505253758473-96b7015fcd40?w=400', 'Spice Growers Alliance')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="handicrafts">
+                <img src="https://cpimg.tistatic.com/07545069/b/4/Trimukhi-Shiva-Statue.jpg" alt="Wooden Crafts" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Handicrafts</p>
+                    <h3 class="product-name">Hand-Carved Wooden Statues</h3>
+                    <p class="seller-info">👤 By Master Woodcarvers Guild</p>
+                    <div class="product-rating">⭐⭐⭐⭐⭐ (4.8) • 72 sold</div>
+                    <div class="delivery-badge">🚚 Secure Packaging • 5-7 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Handcrafted • 🌳 Sustainable Wood</p>
+                    <div class="product-price">₹1,850</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Hand-Carved Wooden Statues', 1850, 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400', 'Master Woodcarvers Guild')">Order Now</button>
+                </div>
+            </div>
+
+            <div class="product-card" data-category="wellness">
+                <img src="https://m.media-amazon.com/images/I/51mJbfcLZyL._UF1000,1000_QL80_.jpg" alt="Ayurvedic" class="product-image">
+                <div class="product-info">
+                    <p class="product-category">Wellness</p>
+                    <h3 class="product-name">Ayurvedic Skincare Kit</h3>
+                    <p class="seller-info">👤 By Natural Beauty Artisans</p>
+                    <div class="product-rating">⭐⭐⭐⭐ (4.7) • 145 sold</div>
+                    <div class="delivery-badge">🚚 Free Delivery • 3-5 Days</div>
+                    <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">✅ Chemical-Free • 🌿 Herbal</p>
+                    <div class="product-price">₹990</div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="orderProduct('Ayurvedic Skincare Kit', 990, 'https://images.unsplash.com/photo-1600428650778-4f2802030a00?w=400', 'Natural Beauty Artisans')">Order Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION SECTION -->
+    <section class="section" id="education" style="background: linear-gradient(135deg, #f0f8f0 0%, #e6f3e6 100%);">
+        <h2 class="section-title"><span data-translate-key="educationTitle">Conservation & Biodiversity Education</span></h2>
+        <p class="section-subtitle"><span data-translate-key="educationSubtitle">Learn about the Western Ghats ecosystem and sustainable practices</span></p>
+
+        <!-- 
+        📺 TO CHANGE YOUTUBE VIDEOS:
+        1. Go to YouTube and find your video
+        2. Click "Share" button below the video
+        3. Click "Embed"
+        4. Copy the URL from: src="https://www.youtube.com/embed/VIDEO_ID"
+        5. Replace the src URL below with your video URL
+        
+        Example: If your video link is https://www.youtube.com/watch?v=ABC123
+        Use: src="https://www.youtube.com/embed/ABC123"
+        -->
+
+        <div class="education-grid">
+            <div class="education-card">
+                <img src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=500" alt="Biodiversity" class="education-image">
+                <div class="education-content">
+                    <span class="education-badge">Biodiversity</span>
+                    <h3>Western Ghats: A Biodiversity Hotspot</h3>
+                    <p>Discover the rich flora and fauna of the Western Ghats, home to over 7,000 species of flowering plants, 139 mammal species, and 508 bird species.</p>
+                    
+                    <!-- YouTube Video Embed -->
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/tBSzQlmET1A" 
+                                title="Western Ghats Biodiversity" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="openEducation('biodiversity')">Read Full Article</button>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=500" alt="Sustainable" class="education-image">
+                <div class="education-content">
+                    <span class="education-badge">Sustainability</span>
+                    <h3>Sustainable Tourism Practices</h3>
+                    <p>Learn how to minimize your environmental footprint while traveling. Understand waste management, water conservation, and responsible wildlife observation.</p>
+                    
+                    <!-- YouTube Video Embed -->
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/2qVdrmYzu8Q" 
+                                title="Sustainable Tourism" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="openEducation('sustainability')">Learn More</button>
+                </div>
+            </div>
+
+            <div class="education-card">
+                <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500" alt="Organic Farming" class="education-image">
+                <div class="education-content">
+                    <span class="education-badge">Agriculture</span>
+                    <h3>Organic Farming Techniques</h3>
+                    <p>Explore traditional and modern organic farming methods used by local farmers. Learn about crop rotation, natural pest control, and composting.</p>
+                    
+                    <!-- YouTube Video Embed -->
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/IhWuN87fM5Q" 
+                                title="Organic Farming" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="openEducation('farming')">Explore</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMUNITY REVIEWS SECTION -->
+    <section class="section review-section" id="community">
+        <h2 class="section-title"><span data-translate-key="communityTitle">Community Stories & Reviews</span></h2>
+        <p class="section-subtitle"><span data-translate-key="communitySubtitle">Share your experience and read stories from travelers and entrepreneurs</span></p>
+
+        <!-- Review Form -->
+        <div class="review-form">
+            <h3 style="color: #2d5016; margin-bottom: 1.5rem;"><span data-translate-key="shareExperience">Share Your Experience</span></h3>
+            <form onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Experience Type</label>
+                    <select required>
+                        <option value="">Select...</option>
+                        <option>Homestay</option>
+                        <option>Eco-Stay</option>
+                        <option>Marketplace Purchase</option>
+                        <option>Guided Tour</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="star-rating" id="starRating">
+                        <span class="star" data-rating="1" onclick="setRating(1)">★</span>
+                        <span class="star" data-rating="2" onclick="setRating(2)">★</span>
+                        <span class="star" data-rating="3" onclick="setRating(3)">★</span>
+                        <span class="star" data-rating="4" onclick="setRating(4)">★</span>
+                        <span class="star" data-rating="5" onclick="setRating(5)">★</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea required placeholder="Share your story and experience..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Review</button>
+            </form>
+        </div>
+
+        <!-- Reviews Grid -->
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">KP</div>
+                    <div class="reviewer-details">
+                        <div class="reviewer-name">Kavita Patil</div>
+                        <div class="review-date">Homestay Owner • 2 months ago</div>
+                    </div>
+                </div>
+                <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"This platform has completely transformed our family business! We've hosted guests from 15 countries and the quality certification helped build trust. The logistics support for shipping our farm produce has opened new markets. Highly grateful!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">RJ</div>
+                    <div class="reviewer-details">
+                        <div class="reviewer-name">Rahul Jadhav</div>
+                        <div class="review-date">Artisan • 3 weeks ago</div>
+                    </div>
+                </div>
+                <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"As a traditional Warli artist, I struggled to reach customers beyond local markets. This platform gave me access to national and international buyers. The branding support helped showcase my authentic work and the payment system is reliable!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">ST</div>
+                    <div class="reviewer-details">
+                        <div class="reviewer-name">Sarah Thompson</div>
+                        <div class="review-date">Tourist from UK • 1 week ago</div>
+                    </div>
+                </div>
+                <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"My stay at Patil Family Farm was the highlight of my India trip! The authenticity, warmth, and cultural exchange were incredible. I learned to cook traditional Maharashtrian dishes and participated in organic farming. Will definitely return!"</p>
+            </div>
+
+            <div class="review-card">
+                <div class="reviewer-info">
+                    <div class="reviewer-avatar">AP</div>
+                    <div class="reviewer-details">
+                        <div class="reviewer-name">Amit Patel</div>
+                        <div class="review-date">Eco-Tourist • 5 days ago</div>
+                    </div>
+                </div>
+                <div class="review-rating">⭐⭐⭐⭐⭐</div>
+                <p class="review-text">"Excellent eco-tourism initiative! Stayed at Green Valley Retreat - solar power, organic food, rainwater harvesting - everything aligned with sustainable living. Bought amazing handicrafts with reliable delivery!"</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p><span data-translate-key="footerText">&copy; 2025 Satara Ecotourism Platform - Empowering rural entrepreneurs, preserving nature</span></p>
+        <p style="margin-top: 1rem;">📧 contact@sataraecotourism.com | 📞 +91 2162 123456</p>
+        <p style="margin-top: 0.5rem;"><span data-translate-key="deliveryText">🌍 Delivery across India • International shipping available</span></p>
+    </footer>
+
+    <!-- BOOKING MODAL -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeBookingModal()">×</span>
+            <h2 style="color: #2d5016; margin-bottom: 0.5rem;">Complete Your Booking</h2>
+            <h3 style="color: #4a7c2c; margin-bottom: 1.5rem;" id="bookingPropertyName"></h3>
+            
+            <form onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" name="email" required placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" name="phone" required placeholder="+91 98765 43210" pattern="[+]?[0-9]{10,13}">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Check-in Date *</label>
+                        <input type="date" name="checkin" required min="">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Check-out Date *</label>
+                        <input type="date" name="checkout" required min="">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Number of Guests *</label>
+                    <select name="guests" required>
+                        <option value="">Select number of guests</option>
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5">5 Guests</option>
+                        <option value="6+">6+ Guests (contact us)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Special Requests (Optional)</label>
+                    <textarea name="requests" rows="3" placeholder="Dietary restrictions, accessibility needs, early check-in, etc."></textarea>
+                </div>
+                
+                <div class="info-box">
+                    <h4 style="color: #2d5016; margin-bottom: 0.5rem;">📋 What Happens Next:</h4>
+                    <ul style="color: #666; line-height: 1.8; margin-left: 1.5rem;">
+                        <li>✅ Instant booking confirmation via email & SMS</li>
+                        <li>📱 Property owner contacts you within 2 hours</li>
+                        <li>💳 Pay 30% advance to confirm (secure payment link)</li>
+                        <li>📄 Receive booking details & travel guide</li>
+                        <li>🤝 Meet your host and enjoy your stay!</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>💡 Cancellation Policy:</strong> Free cancellation up to 48 hours before check-in. 50% refund within 24 hours.
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                    🎉 Confirm Booking & Notify Host
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER MODAL -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeOrderModal()">×</span>
+            <h2 style="color: #2d5016; margin-bottom: 0.5rem;">Complete Your Order</h2>
+            <h3 style="color: #4a7c2c; margin-bottom: 1.5rem;" id="orderProductName"></h3>
+            
+            <form onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" name="name" required placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" name="email" required placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" name="phone" required placeholder="+91 98765 43210" pattern="[+]?[0-9]{10,13}">
+                </div>
+                
+                <div class="form-group">
+                    <label>Delivery Address *</label>
+                    <textarea name="address" required rows="3" placeholder="House/Flat No., Street, Area"></textarea>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>City *</label>
+                        <input type="text" name="city" required placeholder="Enter city">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Pincode *</label>
+                        <input type="text" name="pincode" required placeholder="400001" pattern="[0-9]{6}">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>State *</label>
+                    <select name="state" required>
+                        <option value="">Select state</option>
+                        <option>Maharashtra</option>
+                        <option>Delhi</option>
+                        <option>Karnataka</option>
+                        <option>Gujarat</option>
+                        <option>Tamil Nadu</option>
+                        <option>Rajasthan</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Quantity *</label>
+                    <select name="quantity" required onchange="updateOrderTotal()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+                
+                <div class="info-box">
+                    <h4 style="color: #2d5016; margin-bottom: 0.5rem;">📦 Delivery & Logistics Information:</h4>
+                    <ul style="color: #666; line-height: 1.8; margin-left: 1.5rem;">
+                        <li><strong>🚚 Shipping Partners:</strong> Blue Dart, Delhivery, India Post</li>
+                        <li><strong>📦 Packaging:</strong> Eco-friendly, recyclable materials</li>
+                        <li><strong>🔒 Quality Assurance:</strong> Each product inspected before dispatch</li>
+                        <li><strong>🌍 Coverage:</strong> All India delivery (Metro: 2-3 days, Tier 2/3: 5-7 days)</li>
+                        <li><strong>📍 Tracking:</strong> Real-time SMS & Email updates</li>
+                        <li><strong>💳 Payment:</strong> Pay online (secure) or Cash on Delivery</li>
+                        <li><strong>↩️ Returns:</strong> 7-day easy return policy</li>
+                        <li><strong>💰 Free Delivery:</strong> Orders above ₹500</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>🌱 Our Commitment:</strong> 70% of profit goes directly to rural entrepreneurs. Your purchase supports sustainable livelihoods!
+                </div>
+                
+                <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c; margin: 1rem 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Product Price:</span>
+                        <span id="orderPrice">₹0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Quantity:</span>
+                        <span id="orderQty">1</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Shipping:</span>
+                        <span id="shippingCharge">Free</span>
+                    </div>
+                    <hr style="margin: 0.5rem 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: bold; color: #2d5016;">
+                        <span>Total:</span>
+                        <span id="orderTotal">₹0</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                    🛒 Confirm Order & Proceed to Payment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ARTICLE MODAL -->
+    <div class="modal" id="articleModal">
+        <div class="modal-content" style="max-width: 900px;">
+            <span class="modal-close" onclick="closeArticleModal()">×</span>
+            <div id="articleContent"></div>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="toggleCart()">×</span>
+            <h2 style="color: #2d5016; margin-bottom: 1rem;">Shopping Cart</h2>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-total" id="cartTotal">Total: ₹0</div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let selectedRating = 0;
+        let currentLang = 'en';
+        let currentProduct = {};
+
+        // Complete Translation Dictionary
+        const translations = {
+            en: {
+                // Logo
+                logoText: "Satara Ecotourism",
+                
+                // Navigation
+                home: "Home",
+                bookStay: "Book Stay",
+                shop: "Shop",
+                learn: "Learn",
+                community: "Community",
+                
+                // Hero
+                heroTitle: "Discover Sustainable Satara",
+                heroSubtitle: "Experience authentic rural life, support local communities, and explore nature responsibly",
+                startJourney: "Start Your Journey",
+                
+                // Booking Section
+                ecoStaysTitle: "Eco-Stays & Rural Homestays",
+                ecoStaysSubtitle: "Authentic accommodations that support local families and preserve traditional culture",
+                ecoStay: "Eco-Stay",
+                ruralHomestay: "Rural Homestay",
+                bookNow: "Book Now",
+                perNight: "/night",
+                reviews: "reviews",
+                
+                // Property Names
+                greenValley: "Green Valley Retreat",
+                patilFarm: "Patil Family Farm",
+                waterfallView: "Waterfall View Lodge",
+                mountainMist: "Mountain Mist Cottage",
+                sunriseFarm: "Sunrise Organic Farm",
+                heritageHome: "Heritage Village Home",
+                wildWoods: "Wild Woods Eco Resort",
+                riverside: "Riverside Serenity",
+                
+                // Features
+                solarPower: "♻️ Solar Power",
+                organicFarm: "🌾 Organic Farm",
+                rainwaterHarvest: "🚿 Rainwater Harvest",
+                traditionalHome: "🏡 Traditional Home",
+                homeCookedMeals: "🍲 Home Cooked Meals",
+                culturalActivities: "🎨 Cultural Activities",
+                natureTrails: "🏞️ Nature Trails",
+                birdWatching: "🦜 Bird Watching",
+                zeroWaste: "♻️ Zero Waste",
+                valleyViews: "🌄 Valley Views",
+                bonfireSetup: "🔥 Bonfire Setup",
+                cyclingTours: "🚴 Cycling Tours",
+                farmExperience: "🌾 Farm Experience",
+                freshDairy: "🥛 Fresh Dairy",
+                yogaSessions: "🧘 Yoga Sessions",
+                years150Old: "🏛️ 150 Years Old",
+                folkDance: "🎭 Folk Dance",
+                cookingClasses: "🍛 Cooking Classes",
+                wildlifeTours: "🐾 Wildlife Tours",
+                campFires: "🏕️ Camp Fires",
+                natureWalks: "🌳 Nature Walks",
+                riverView: "🏞️ River View",
+                fishing: "🎣 Fishing",
+                kayaking: "🛶 Kayaking",
+                
+                // Marketplace
+                marketplaceTitle: "Local Marketplace",
+                marketplaceSubtitle: "Support rural entrepreneurs by purchasing authentic handicrafts and organic products with nationwide delivery",
+                allProducts: "All Products",
+                handicrafts: "Handicrafts",
+                organicFood: "Organic Food",
+                textiles: "Textiles",
+                wellness: "Wellness",
+                orderNow: "Order Now",
+                freeDelivery: "🚚 Free Delivery",
+                days3to5: "3-5 Days",
+                expressDelivery: "🚚 Express Delivery",
+                days2to3: "2-3 Days",
+                qualityCertified: "✅ Quality Certified",
+                sustainable: "🌱 Sustainable",
+                pureCertified: "✅ 100% Pure",
+                organic: "🌿 Organic Certified",
+                authentic: "✅ Authentic",
+                traditional: "🎨 Traditional Method",
+                handwoven: "✅ Handwoven",
+                naturalDyes: "🌿 Natural Dyes",
+                handmade: "✅ Handmade",
+                ecoFriendly: "🌱 Eco-Friendly",
+                
+                // Product Names
+                bambooBaskets: "Handwoven Bamboo Baskets",
+                wildHoney: "Wild Forest Honey (500g)",
+                warliPaintings: "Warli Tribal Paintings",
+                cottonSaree: "Handloom Cotton Saree",
+                herbTea: "Mountain Herb Tea Mix",
+                clayPottery: "Traditional Clay Pottery Set",
+                jaggery: "Organic Jaggery (1kg)",
+                juteBags: "Jute Shopping Bags (Set of 3)",
+                essentialOils: "Essential Oils Set (5 bottles)",
+                spiceCollection: "Organic Spice Collection",
+                woodenStatues: "Hand-Carved Wooden Statues",
+                ayurvedicKit: "Ayurvedic Skincare Kit",
+                
+                // Seller names
+                kavitaArtisans: "By Kavita Artisans Collective",
+                beeKeepers: "By Satara Bee Keepers Co-op",
+                tribalArt: "By Rahul Tribal Art Studio",
+                womenWeavers: "By Women Weavers Collective",
+                organicFarmers: "By Satara Organic Farmers",
+                pottersGuild: "By Village Potters Guild",
+                sugarcaneFarmers: "By Sugarcane Farmers Co-op",
+                ecoCraft: "By Eco Craft Makers",
+                herbalEssence: "By Herbal Essence Co.",
+                spiceGrowers: "By Spice Growers Alliance",
+                woodcarvers: "By Master Woodcarvers Guild",
+                beautyArtisans: "By Natural Beauty Artisans",
+                
+                // Education
+                educationTitle: "Conservation & Biodiversity Education",
+                educationSubtitle: "Learn about the Western Ghats ecosystem and sustainable practices",
+                biodiversity: "Biodiversity",
+                biodiversityTitle: "Western Ghats: A Biodiversity Hotspot",
+                biodiversityDesc: "Discover the rich flora and fauna of the Western Ghats, home to over 7,000 species of flowering plants, 139 mammal species, and 508 bird species.",
+                sustainability: "Sustainability",
+                sustainabilityTitle: "Sustainable Tourism Practices",
+                sustainabilityDesc: "Learn how to minimize your environmental footprint while traveling. Understand waste management, water conservation, and responsible wildlife observation.",
+                agriculture: "Agriculture",
+                farmingTitle: "Organic Farming Techniques",
+                farmingDesc: "Explore traditional and modern organic farming methods used by local farmers. Learn about crop rotation, natural pest control, and composting.",
+                readFullArticle: "Read Full Article",
+                learnMore: "Learn More",
+                explore: "Explore",
+                
+                // Community
+                communityTitle: "Community Stories & Reviews",
+                communitySubtitle: "Share your experience and read stories from travelers and entrepreneurs",
+                shareExperience: "Share Your Experience",
+                yourName: "Your Name",
+                experienceType: "Experience Type",
+                selectExp: "Select...",
+                homestay: "Homestay",
+                marketplacePurchase: "Marketplace Purchase",
+                guidedTour: "Guided Tour",
+                rating: "Rating",
+                yourReview: "Your Review",
+                submitReview: "Submit Review",
+                
+                // Forms
+                fullName: "Full Name",
+                emailAddress: "Email Address",
+                phoneNumber: "Phone Number",
+                checkinDate: "Check-in Date",
+                checkoutDate: "Check-out Date",
+                numGuests: "Number of Guests",
+                selectGuests: "Select number of guests",
+                guest1: "1 Guest",
+                guests2: "2 Guests",
+                guests3: "3 Guests",
+                guests4: "4 Guests",
+                guests5: "5 Guests",
+                guests6plus: "6+ Guests (contact us)",
+                specialRequests: "Special Requests (Optional)",
+                deliveryAddress: "Delivery Address",
+                city: "City",
+                pincode: "Pincode",
+                state: "State",
+                selectState: "Select state",
+                quantity: "Quantity",
+                confirmBooking: "Confirm Booking & Notify Host",
+                confirmOrder: "Confirm Order & Proceed to Payment",
+                
+                // Footer
+                footerText: "Satara Ecotourism Platform - Empowering rural entrepreneurs, preserving nature",
+                deliveryText: "Delivery across India • International shipping available"
+            },
+            mr: {
+                // Logo
+                logoText: "सातारा इकोटूरिझम",
+                
+                // Navigation
+                home: "मुख्यपृष्ठ",
+                bookStay: "निवास बुक करा",
+                shop: "खरेदी करा",
+                learn: "शिका",
+                community: "समुदाय",
+                
+                // Hero
+                heroTitle: "शाश्वत सातारा शोधा",
+                heroSubtitle: "प्रामाणिक ग्रामीण जीवनाचा अनुभव घ्या, स्थानिक समुदायांना पाठिंबा द्या आणि निसर्गाचा जबाबदारीने शोध घ्या",
+                startJourney: "आपला प्रवास सुरू करा",
+                
+                // Booking Section
+                ecoStaysTitle: "इको-स्टे आणि ग्रामीण होमस्टे",
+                ecoStaysSubtitle: "स्थानिक कुटुंबांना पाठिंबा देणारे आणि पारंपारिक संस्कृती जतन करणारे प्रामाणिक निवासस्थान",
+                ecoStay: "इको-स्टे",
+                ruralHomestay: "ग्रामीण होमस्टे",
+                bookNow: "आता बुक करा",
+                perNight: "/रात्र",
+                reviews: "पुनरावलोकने",
+                
+                // Property Names
+                greenValley: "ग्रीन व्हॅली रिट्रीट",
+                patilFarm: "पाटील फॅमिली फार्म",
+                waterfallView: "वॉटरफॉल व्ह्यू लॉज",
+                mountainMist: "माउंटन मिस्ट कॉटेज",
+                sunriseFarm: "सनराईज ऑर्गॅनिक फार्म",
+                heritageHome: "हेरिटेज व्हिलेज होम",
+                wildWoods: "वाईल्ड वूड्स इको रिसॉर्ट",
+                riverside: "रिव्हरसाईड सेरेनिटी",
+                
+                // Features
+                solarPower: "♻️ सौर ऊर्जा",
+                organicFarm: "🌾 सेंद्रिय शेत",
+                rainwaterHarvest: "🚿 पावसाचे पाणी संचयन",
+                traditionalHome: "🏡 पारंपारिक घर",
+                homeCookedMeals: "🍲 घरी शिजवलेले जेवण",
+                culturalActivities: "🎨 सांस्कृतिक उपक्रम",
+                natureTrails: "🏞️ निसर्ग मार्ग",
+                birdWatching: "🦜 पक्षी निरीक्षण",
+                zeroWaste: "♻️ शून्य कचरा",
+                valleyViews: "🌄 दरी दृश्य",
+                bonfireSetup: "🔥 कॅम्पफायर",
+                cyclingTours: "🚴 सायकलिंग टूर",
+                farmExperience: "🌾 शेत अनुभव",
+                freshDairy: "🥛 ताजे दुग्धउत्पादन",
+                yogaSessions: "🧘 योग सत्रे",
+                years150Old: "🏛️ 150 वर्षे जुने",
+                folkDance: "🎭 लोकनृत्य",
+                cookingClasses: "🍛 स्वयंपाक वर्ग",
+                wildlifeTours: "🐾 वन्यजीव टूर",
+                campFires: "🏕️ कॅम्प फायर",
+                natureWalks: "🌳 निसर्ग फेरी",
+                riverView: "🏞️ नदी दृश्य",
+                fishing: "🎣 मासेमारी",
+                kayaking: "🛶 कयाकिंग",
+                
+                // Marketplace
+                marketplaceTitle: "स्थानिक बाजार",
+                marketplaceSubtitle: "देशव्यापी वितरणासह प्रामाणिक हस्तकला आणि सेंद्रिय उत्पादने खरेदी करून ग्रामीण उद्योजकांना पाठिंबा द्या",
+                allProducts: "सर्व उत्पादने",
+                handicrafts: "हस्तकला",
+                organicFood: "सेंद्रिय अन्न",
+                textiles: "वस्त्र",
+                wellness: "आरोग्य",
+                orderNow: "आता ऑर्डर करा",
+                freeDelivery: "🚚 मोफत डिलिव्हरी",
+                days3to5: "3-5 दिवस",
+                expressDelivery: "🚚 एक्सप्रेस डिलिव्हरी",
+                days2to3: "2-3 दिवस",
+                qualityCertified: "✅ गुणवत्ता प्रमाणित",
+                sustainable: "🌱 शाश्वत",
+                pureCertified: "✅ 100% शुद्ध",
+                organic: "🌿 सेंद्रिय प्रमाणित",
+                authentic: "✅ प्रामाणिक",
+                traditional: "🎨 पारंपारिक पद्धत",
+                handwoven: "✅ हाताने विणलेले",
+                naturalDyes: "🌿 नैसर्गिक रंग",
+                handmade: "✅ हस्तनिर्मित",
+                ecoFriendly: "🌱 पर्यावरणपूरक",
+                
+                // Product Names
+                bambooBaskets: "हाताने विणलेली बांबू टोपली",
+                wildHoney: "जंगली मध (500ग्रॅम)",
+                warliPaintings: "वारली आदिवासी चित्रकला",
+                cottonSaree: "हातमाग सुती साडी",
+                herbTea: "डोंगराळ औषधी चहा",
+                clayPottery: "पारंपारिक माती भांडी सेट",
+                jaggery: "सेंद्रिय गूळ (1किलो)",
+                juteBags: "जुट शॉपिंग बॅग्ज (3 सेट)",
+                essentialOils: "आवश्यक तेले सेट (5 बाटल्या)",
+                spiceCollection: "सेंद्रिय मसाला संग्रह",
+                woodenStatues: "हस्तकोरीव लाकडी मूर्ती",
+                ayurvedicKit: "आयुर्वेदिक त्वचा संगोपन किट",
+                
+                // Seller names
+                kavitaArtisans: "कविता कारागीर संघाकडून",
+                beeKeepers: "सातारा मधमाशी पालक सहकारीकडून",
+                tribalArt: "राहुल आदिवासी कला स्टुडिओकडून",
+                womenWeavers: "महिला विणकर संघाकडून",
+                organicFarmers: "सातारा सेंद्रिय शेतकऱ्यांकडून",
+                pottersGuild: "गाव कुंभार गिल्डकडून",
+                sugarcaneFarmers: "ऊस शेतकरी सहकारीकडून",
+                ecoCraft: "इको क्राफ्ट मेकर्सकडून",
+                herbalEssence: "हर्बल एसेन्स कंपनीकडून",
+                spiceGrowers: "मसाला उत्पादक आघाडीकडून",
+                woodcarvers: "मास्टर लाकूडकाम गिल्डकडून",
+                beautyArtisans: "नैसर्गिक सौंदर्य कारागीरांकडून",
+                
+                // Education
+                educationTitle: "संवर्धन आणि जैवविविधता शिक्षण",
+                educationSubtitle: "पश्चिम घाट परिसंस्था आणि शाश्वत पद्धती बद्दल जाणून घ्या",
+                biodiversity: "जैवविविधता",
+                biodiversityTitle: "पश्चिम घाट: जैवविविधता केंद्र",
+                biodiversityDesc: "पश्चिम घाटातील वैविध्यपूर्ण वनस्पती आणि प्राणी यांचा शोध घ्या, जिथे 7,000 पेक्षा अधिक फुलांच्या वनस्पती, 139 सस्तन प्राणी प्रजाती आणि 508 पक्षी प्रजाती आहेत.",
+                sustainability: "शाश्वतता",
+                sustainabilityTitle: "शाश्वत पर्यटन पद्धती",
+                sustainabilityDesc: "प्रवास करताना आपला पर्यावरणावरील परिणाम कमी कसा करावा ते शिका. कचरा व्यवस्थापन, जल संवर्धन आणि जबाबदार वन्यजीव निरीक्षण समजून घ्या.",
+                agriculture: "शेती",
+                farmingTitle: "सेंद्रिय शेती तंत्र",
+                farmingDesc: "स्थानिक शेतकऱ्यांद्वारे वापरल्या जाणाऱ्या पारंपारिक आणि आधुनिक सेंद्रिय शेती पद्धतींचा शोध घ्या. पीक फेरबदल, नैसर्गिक कीटक नियंत्रण, कंपोस्टिंग याबद्दल जाणून घ्या.",
+                readFullArticle: "पूर्ण लेख वाचा",
+                learnMore: "अधिक जाणून घ्या",
+                explore: "एक्सप्लोर करा",
+                
+                // Community
+                communityTitle: "समुदाय कथा आणि पुनरावलोकने",
+                communitySubtitle: "आपला अनुभव शेअर करा आणि प्रवासी व उद्योजकांच्या कथा वाचा",
+                shareExperience: "आपला अनुभव शेअर करा",
+                yourName: "तुमचे नाव",
+                experienceType: "अनुभवाचा प्रकार",
+                selectExp: "निवडा...",
+                homestay: "होमस्टे",
+                marketplacePurchase: "बाजार खरेदी",
+                guidedTour: "मार्गदर्शित दौरा",
+                rating: "रेटिंग",
+                yourReview: "तुमची पुनरावलोकन",
+                submitReview: "पुनरावलोकन सबमिट करा",
+                
+                // Forms
+                fullName: "पूर्ण नाव",
+                emailAddress: "ईमेल पत्ता",
+                phoneNumber: "फोन नंबर",
+                checkinDate: "चेक-इन तारीख",
+                checkoutDate: "चेक-आउट तारीख",
+                numGuests: "पाहुण्यांची संख्या",
+                selectGuests: "पाहुण्यांची संख्या निवडा",
+                guest1: "1 पाहुणा",
+                guests2: "2 पाहुणे",
+                guests3: "3 पाहुणे",
+                guests4: "4 पाहुणे",
+                guests5: "5 पाहुणे",
+                guests6plus: "6+ पाहुणे (संपर्क करा)",
+                specialRequests: "विशेष विनंत्या (पर्यायी)",
+                deliveryAddress: "डिलिव्हरी पत्ता",
+                city: "शहर",
+                pincode: "पिनकोड",
+                state: "राज्य",
+                selectState: "राज्य निवडा",
+                quantity: "प्रमाण",
+                confirmBooking: "बुकिंग पुष्टी करा आणि मालकाला सूचित करा",
+                confirmOrder: "ऑर्डर पुष्टी करा आणि पेमेंटकडे जा",
+                
+                // Footer
+                footerText: "सातारा इकोटूरिझम प्लॅटफॉर्म - ग्रामीण उद्योजकांना सशक्त करणे, निसर्ग जतन करणे",
+                deliveryText: "संपूर्ण भारतात डिलिव्हरी • आंतरराष्ट्रीय शिपिंग उपलब्ध"
+            },
+            hi: {
+                // Logo
+                logoText: "सतारा इकोटूरिज्म",
+                
+                // Navigation
+                home: "होम",
+                bookStay: "बुकिंग",
+                shop: "खरीदें",
+                learn: "सीखें",
+                community: "समुदाय",
+                
+                // Hero
+                heroTitle: "सतत सतारा की खोज करें",
+                heroSubtitle: "प्रामाणिक ग्रामीण जीवन का अनुभव करें, स्थानीय समुदायों का समर्थन करें और प्रकृति का जिम्मेदारी से अन्वेषण करें",
+                startJourney: "अपनी यात्रा शुरू करें",
+                
+                // Booking Section
+                ecoStaysTitle: "इको-स्टे और ग्रामीण होमस्टे",
+                ecoStaysSubtitle: "प्रामाणिक आवास जो स्थानीय परिवारों का समर्थन करता है और पारंपरिक संस्कृति को संरक्षित करता है",
+                ecoStay: "इको-स्टे",
+                ruralHomestay: "ग्रामीण होमस्टे",
+                bookNow: "अभी बुक करें",
+                perNight: "/रात",
+                reviews: "समीक्षाएं",
+                
+                // Property Names
+                greenValley: "ग्रीन वैली रिट्रीट",
+                patilFarm: "पाटिल फैमिली फार्म",
+                waterfallView: "वाटरफॉल व्यू लॉज",
+                mountainMist: "माउंटेन मिस्ट कॉटेज",
+                sunriseFarm: "सनराइज ऑर्गेनिक फार्म",
+                heritageHome: "हेरिटेज विलेज होम",
+                wildWoods: "वाइल्ड वुड्स इको रिसॉर्ट",
+                riverside: "रिवरसाइड सेरेनिटी",
+                
+                // Features
+                solarPower: "♻️ सौर ऊर्जा",
+                organicFarm: "🌾 जैविक खेत",
+                rainwaterHarvest: "🚿 वर्षा जल संचयन",
+                traditionalHome: "🏡 पारंपरिक घर",
+                homeCookedMeals: "🍲 घर का खाना",
+                culturalActivities: "🎨 सांस्कृतिक गतिविधियाँ",
+                natureTrails: "🏞️ प्रकृति पथ",
+                birdWatching: "🦜 पक्षी अवलोकन",
+                zeroWaste: "♻️ शून्य अपशिष्ट",
+                valleyViews: "🌄 घाटी के दृश्य",
+                bonfireSetup: "🔥 कैम्पफायर",
+                cyclingTours: "🚴 साइकिलिंग टूर",
+                farmExperience: "🌾 खेती का अनुभव",
+                freshDairy: "🥛 ताजा डेयरी",
+                yogaSessions: "🧘 योग सत्र",
+                years150Old: "🏛️ 150 साल पुराना",
+                folkDance: "🎭 लोक नृत्य",
+                cookingClasses: "🍛 खाना बनाना सिखें",
+                wildlifeTours: "🐾 वन्यजीव पर्यटन",
+                campFires: "🏕️ कैंप फायर",
+                natureWalks: "🌳 प्रकृति भ्रमण",
+                riverView: "🏞️ नदी का दृश्य",
+                fishing: "🎣 मछली पकड़ना",
+                kayaking: "🛶 कयाकिंग",
+                
+                // Marketplace
+                marketplaceTitle: "स्थानीय बाज़ार",
+                marketplaceSubtitle: "राष्ट्रव्यापी डिलीवरी के साथ प्रामाणिक हस्तशिल्प और जैविक उत्पाद खरीदकर ग्रामीण उद्यमियों का समर्थन करें",
+                allProducts: "सभी उत्पाद",
+                handicrafts: "हस्तशिल्प",
+                organicFood: "जैविक खाद्य",
+                textiles: "कपड़ा",
+                wellness: "स्वास्थ्य",
+                orderNow: "अभी ऑर्डर करें",
+                freeDelivery: "🚚 मुफ्त डिलीवरी",
+                days3to5: "3-5 दिन",
+                expressDelivery: "🚚 एक्सप्रेस डिलीवरी",
+                days2to3: "2-3 दिन",
+                qualityCertified: "✅ गुणवत्ता प्रमाणित",
+                sustainable: "🌱 टिकाऊ",
+                pureCertified: "✅ 100% शुद्ध",
+                organic: "🌿 जैविक प्रमाणित",
+                authentic: "✅ प्रामाणिक",
+                traditional: "🎨 पारंपरिक विधि",
+                handwoven: "✅ हाथ से बुना",
+                naturalDyes: "🌿 प्राकृतिक रंग",
+                handmade: "✅ हस्तनिर्मित",
+                ecoFriendly: "🌱 पर्यावरण के अनुकूल",
+                
+                // Product Names
+                bambooBaskets: "हाथ से बुने बांस की टोकरी",
+                wildHoney: "जंगली शहद (500ग्राम)",
+                warliPaintings: "वारली आदिवासी चित्र",
+                cottonSaree: "हथकरघा सूती साड़ी",
+                herbTea: "पहाड़ी जड़ी बूटी चाय",
+                clayPottery: "पारंपरिक मिट्टी के बर्तन सेट",
+                jaggery: "जैविक गुड़ (1किलो)",
+                juteBags: "जूट शॉपिंग बैग (3 सेट)",
+                essentialOils: "आवश्यक तेल सेट (5 बोतलें)",
+                spiceCollection: "जैविक मसाला संग्रह",
+                woodenStatues: "हाथ से उकेरी लकड़ी की मूर्तियां",
+                ayurvedicKit: "आयुर्वेदिक त्वचा देखभाल किट",
+                
+                // Seller names
+                kavitaArtisans: "कविता शिल्पकार सामूहिक द्वारा",
+                beeKeepers: "सतारा मधुमक्खी पालक सहकारी द्वारा",
+                tribalArt: "राहुल आदिवासी कला स्टूडियो द्वारा",
+                womenWeavers: "महिला बुनकर सामूहिक द्वारा",
+                organicFarmers: "सतारा जैविक किसानों द्वारा",
+                pottersGuild: "ग्राम कुम्हार गिल्ड द्वारा",
+                sugarcaneFarmers: "गन्ना किसान सहकारी द्वारा",
+                ecoCraft: "इको क्राफ्ट मेकर्स द्वारा",
+                herbalEssence: "हर्बल एसेंस कंपनी द्वारा",
+                spiceGrowers: "मसाला उत्पादक गठबंधन द्वारा",
+                woodcarvers: "मास्टर लकड़ी उकेरक गिल्ड द्वारा",
+                beautyArtisans: "प्राकृतिक सौंदर्य शिल्पकार द्वारा",
+                
+                // Education
+                educationTitle: "संरक्षण और जैव विविधता शिक्षा",
+                educationSubtitle: "पश्चिमी घाट पारिस्थितिकी और स्थायी प्रथाओं के बारे में जानें",
+                biodiversity: "जैव विविधता",
+                biodiversityTitle: "पश्चिमी घाट: जैव विविधता हॉटस्पॉट",
+                biodiversityDesc: "पश्चिमी घाट की समृद्ध वनस्पतियों और जीवों की खोज करें, जहाँ 7,000 से अधिक फूलों की प्रजातियाँ, 139 स्तनधारी प्रजातियाँ और 508 पक्षी प्रजातियाँ हैं।",
+                sustainability: "स्थिरता",
+                sustainabilityTitle: "सतत पर्यटन प्रथाएं",
+                sustainabilityDesc: "यात्रा करते समय अपने पर्यावरणीय प्रभाव को कम करने का तरीका जानें। अपशिष्ट प्रबंधन, जल संरक्षण और जिम्मेदार वन्यजीव अवलोकन को समझें।",
+                agriculture: "कृषि",
+                farmingTitle: "जैविक खेती तकनीक",
+                farmingDesc: "स्थानीय किसानों द्वारा उपयोग की जाने वाली पारंपरिक और आधुनिक जैविक खेती विधियों का अन्वेषण करें। फसल चक्र, प्राकृतिक कीट नियंत्रण, खाद के बारे में जानें।",
+                readFullArticle: "पूर्ण लेख पढ़ें",
+                learnMore: "और जानें",
+                explore: "अन्वेषण करें",
+                
+                // Community
+                communityTitle: "समुदाय की कहानियाँ और समीक्षाएं",
+                communitySubtitle: "अपना अनुभव साझा करें और यात्रियों और उद्यमियों की कहानियाँ पढ़ें",
+                shareExperience: "अपना अनुभव साझा करें",
+                yourName: "आपका नाम",
+                experienceType: "अनुभव का प्रकार",
+                selectExp: "चुनें...",
+                homestay: "होमस्टे",
+                marketplacePurchase: "बाजार खरीद",
+                guidedTour: "गाइडेड टूर",
+                rating: "रेटिंग",
+                yourReview: "आपकी समीक्षा",
+                submitReview: "समीक्षा सबमिट करें",
+                
+                // Forms
+                fullName: "पूरा नाम",
+                emailAddress: "ईमेल पता",
+                phoneNumber: "फोन नंबर",
+                checkinDate: "चेक-इन तिथि",
+                checkoutDate: "चेक-आउट तिथि",
+                numGuests: "मेहमानों की संख्या",
+                selectGuests: "मेहमानों की संख्या चुनें",
+                guest1: "1 मेहमान",
+                guests2: "2 मेहमान",
+                guests3: "3 मेहमान",
+                guests4: "4 मेहमान",
+                guests5: "5 मेहमान",
+                guests6plus: "6+ मेहमान (संपर्क करें)",
+                specialRequests: "विशेष अनुरोध (वैकल्पिक)",
+                deliveryAddress: "डिलीवरी पता",
+                city: "शहर",
+                pincode: "पिनकोड",
+                state: "राज्य",
+                selectState: "राज्य चुनें",
+                quantity: "मात्रा",
+                confirmBooking: "बुकिंग पुष्टि करें और मालिक को सूचित करें",
+                confirmOrder: "ऑर्डर पुष्टि करें और भुगतान के लिए आगे बढ़ें",
+                
+                // Footer
+                footerText: "सतारा इकोटूरिज्म प्लेटफॉर्म - ग्रामीण उद्यमियों को सशक्त बनाना, प्रकृति का संरक्षण",
+                deliveryText: "पूरे भारत में डिलीवरी • अंतर्राष्ट्रीय शिपिंग उपलब्ध"
+            }
+        };
+
+        // MOBILE MENU TOGGLE
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.remove('active');
+        }
+
+        // LANGUAGE SWITCHING
+        function changeLanguage(lang, button) {
+            currentLang = lang;
+            
+            var buttons = document.querySelectorAll('.lang-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            if (button) {
+                button.classList.add('active');
+            }
+            
+            var t = translations[lang];
+            
+            var elements = document.querySelectorAll('[data-translate-key]');
+            for (var i = 0; i < elements.length; i++) {
+                var element = elements[i];
+                var key = element.getAttribute('data-translate-key');
+                if (t && t[key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = t[key];
+                    } else {
+                        element.innerHTML = t[key];
+                    }
+                }
+            }
+            
+            translatePropertyCards(lang, t);
+            translateProductCards(lang, t);
+            translateEducationCards(lang, t);
+            
+            var langName = lang === 'en' ? 'English' : lang === 'mr' ? 'मराठी (Marathi)' : 'हिंदी (Hindi)';
+            alert('Language changed to: ' + langName);
+        }
+
+        function translatePropertyCards(lang, t) {
+            var propertyNames = {
+                'Green Valley Retreat': t.greenValley,
+                'Patil Family Farm': t.patilFarm,
+                'Waterfall View Lodge': t.waterfallView,
+                'Mountain Mist Cottage': t.mountainMist,
+                'Sunrise Organic Farm': t.sunriseFarm,
+                'Heritage Village Home': t.heritageHome,
+                'Wild Woods Eco Resort': t.wildWoods,
+                'Riverside Serenity': t.riverside
+            };
+
+            var cards = document.querySelectorAll('.property-card');
+            for (var i = 0; i < cards.length; i++) {
+                var nameElement = cards[i].querySelector('.property-name');
+                if (nameElement) {
+                    var originalName = nameElement.textContent.trim();
+                    for (var englishName in propertyNames) {
+                        if (originalName.indexOf(englishName.split(' ')[0]) !== -1 || originalName === propertyNames[englishName]) {
+                            nameElement.textContent = propertyNames[englishName];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        function translateProductCards(lang, t) {
+            var productNames = {
+                'Handwoven Bamboo Baskets': t.bambooBaskets,
+                'Wild Forest Honey (500g)': t.wildHoney,
+                'Warli Tribal Paintings': t.warliPaintings,
+                'Handloom Cotton Saree': t.cottonSaree,
+                'Mountain Herb Tea Mix': t.herbTea,
+                'Traditional Clay Pottery Set': t.clayPottery,
+                'Organic Jaggery (1kg)': t.jaggery,
+                'Jute Shopping Bags (Set of 3)': t.juteBags,
+                'Essential Oils Set (5 bottles)': t.essentialOils,
+                'Organic Spice Collection': t.spiceCollection,
+                'Hand-Carved Wooden Statues': t.woodenStatues,
+                'Ayurvedic Skincare Kit': t.ayurvedicKit
+            };
+
+            var cards = document.querySelectorAll('.product-card');
+            for (var i = 0; i < cards.length; i++) {
+                var nameElement = cards[i].querySelector('.product-name');
+                if (nameElement) {
+                    var originalName = nameElement.textContent.trim();
+                    for (var englishName in productNames) {
+                        var baseName = englishName.split('(')[0].trim();
+                        if (originalName.indexOf(baseName.split(' ')[0]) !== -1 || originalName === productNames[englishName]) {
+                            nameElement.textContent = productNames[englishName];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        function translateEducationCards(lang, t) {
+            var educationCards = document.querySelectorAll('.education-card');
+            
+            if (educationCards[0]) {
+                var title0 = educationCards[0].querySelector('h3');
+                var desc0 = educationCards[0].querySelector('p');
+                var btn0 = educationCards[0].querySelector('.btn');
+                if (title0) title0.textContent = t.biodiversityTitle;
+                if (desc0) desc0.textContent = t.biodiversityDesc;
+                if (btn0) btn0.textContent = t.readFullArticle;
+            }
+            
+            if (educationCards[1]) {
+                var title1 = educationCards[1].querySelector('h3');
+                var desc1 = educationCards[1].querySelector('p');
+                var btn1 = educationCards[1].querySelector('.btn');
+                if (title1) title1.textContent = t.sustainabilityTitle;
+                if (desc1) desc1.textContent = t.sustainabilityDesc;
+                if (btn1) btn1.textContent = t.learnMore;
+            }
+            
+            if (educationCards[2]) {
+                var title2 = educationCards[2].querySelector('h3');
+                var desc2 = educationCards[2].querySelector('p');
+                var btn2 = educationCards[2].querySelector('.btn');
+                if (title2) title2.textContent = t.farmingTitle;
+                if (desc2) desc2.textContent = t.farmingDesc;
+                if (btn2) btn2.textContent = t.explore;
+            }
+        }
+
+        // BOOKING SYSTEM
+        function bookProperty(name, price) {
+            document.getElementById('bookingPropertyName').textContent = name + ' - ₹' + price + '/night';
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const bookingData = {
+                property: document.getElementById('bookingPropertyName').textContent,
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                checkin: formData.get('checkin'),
+                checkout: formData.get('checkout'),
+                guests: formData.get('guests'),
+                specialRequests: formData.get('requests')
+            };
+            
+            alert(`✅ BOOKING CONFIRMED!\n\nProperty: ${bookingData.property}\nGuest: ${bookingData.name}\nCheck-in: ${bookingData.checkin}\nCheck-out: ${bookingData.checkout}\n\n📧 CONFIRMATION EMAIL SENT TO:\n${bookingData.email}\n\n📱 SMS SENT TO:\n${bookingData.phone}\n\n🏡 PROPERTY OWNER NOTIFIED\nThe homestay owner will contact you within 2 hours.\n\nYOU WILL RECEIVE:\n✅ Booking confirmation PDF\n✅ Property owner contact details\n✅ Travel directions & local guide info\n✅ House rules & check-in instructions\n✅ Payment link (pay 30% advance)\n\n📞 24/7 Support: +91 2162 123456\n\nBooking ID: BK${Date.now()}\n\nThank you for choosing sustainable tourism! 🌿`);
+            
+            closeBookingModal();
+            event.target.reset();
+        }
+
+        // ORDER SYSTEM
+        function orderProduct(name, price, image, seller) {
+            currentProduct = { name, price, image, seller };
+            document.getElementById('orderProductName').textContent = name;
+            document.getElementById('orderPrice').textContent = '₹' + price;
+            document.getElementById('orderTotal').textContent = '₹' + price;
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        function updateOrderTotal() {
+            const qty = parseInt(document.querySelector('select[name="quantity"]').value);
+            const price = currentProduct.price;
+            const total = qty * price;
+            document.getElementById('orderQty').textContent = qty;
+            document.getElementById('orderTotal').textContent = '₹' + total;
+            document.getElementById('shippingCharge').textContent = total >= 500 ? 'Free' : '₹50';
+        }
+
+        function submitOrder(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const orderData = {
+                product: currentProduct.name,
+                price: currentProduct.price,
+                seller: currentProduct.seller,
+                quantity: formData.get('quantity'),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                city: formData.get('city'),
+                pincode: formData.get('pincode'),
+                state: formData.get('state')
+            };
+            
+            const total = orderData.price * orderData.quantity;
+            
+            alert(`✅ ORDER CONFIRMED!\n\nProduct: ${orderData.product}\nQuantity: ${orderData.quantity}\nTotal: ₹${total}\n\n📦 DELIVERY DETAILS:\n${orderData.name}\n${orderData.address}\n${orderData.city}, ${orderData.state} - ${orderData.pincode}\n\n📧 ORDER CONFIRMATION SENT TO:\n${orderData.email}\n\n📱 SMS WITH TRACKING LINK SENT TO:\n${orderData.phone}\n\n🚚 LOGISTICS INFORMATION:\n✅ Courier Partner: Blue Dart Express\n✅ Packaging: Eco-friendly, Quality Sealed\n✅ Estimated Delivery: 3-5 business days\n✅ Tracking ID: BD${Date.now()}\n✅ Real-time tracking via SMS & Email\n\n👨‍🌾 ENTREPRENEUR NOTIFIED:\n${orderData.seller} has been informed of your order and will prepare it for dispatch within 24 hours.\n\nNEXT STEPS:\n1️⃣ Payment link sent to email/SMS\n2️⃣ Track order status in real-time\n3️⃣ Product quality checked before dispatch\n4️⃣ Receive product within 3-5 days\n5️⃣ 7-day easy returns if needed\n\n💳 PAYMENT OPTIONS:\n• Pay Online (UPI/Card/Wallet) - Get 5% discount\n• Cash on Delivery (COD) available\n\n📞 24/7 Support: +91 2162 123456\nOrder ID: ORD${Date.now()}\n\n🌱 Thank you for supporting rural entrepreneurs! 70% of your payment goes directly to ${orderData.seller}. 🙏`);
+            
+            closeOrderModal();
+            event.target.reset();
+        }
+
+        // SHOPPING CART
+        function addToCart(name, price, image) {
+            cart.push({ name, price, image });
+            updateCart();
+            alert(`✅ ${name} added to cart!`);
+        }
+
+        function updateCart() {
+            document.getElementById('cartCount').textContent = cart.length;
+            
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Your cart is empty</p>';
+                cartTotal.textContent = 'Total: ₹0';
+                return;
+            }
+            
+            cartItems.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <h4 style="color: #2d5016;">${item.name}</h4>
+                        <p style="color: #4a7c2c; font-weight: bold;">₹${item.price}</p>
+                    </div>
+                    <button onclick="removeFromCart(${index})" style="background: #ff4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            cartTotal.textContent = `Total: ₹${total}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function toggleCart() {
+            document.getElementById('cartModal').classList.toggle('active');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            alert(`🎉 Order Confirmed!\n\nTotal Amount: ₹${total}\n\n✅ Benefits of your purchase:\n• Supports ${cart.length} rural entrepreneur(s)\n• Quality certified products\n• Free shipping across India (orders above ₹500)\n• 7-day return policy\n• Real-time tracking\n\nYou'll receive:\n📧 Order confirmation email\n📦 Tracking details within 24 hours\n🎁 Thank you gift with first order\n\n🚚 DELIVERY TIMELINE:\nMetro cities: 2-3 days\nTier 2 cities: 4-5 days\nRural areas: 5-7 days\n\nThank you for supporting sustainable rural businesses! 🌱`);
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        // MARKETPLACE FILTER
+        function filterProducts(category) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // RATING SYSTEM
+        function setRating(rating) {
+            selectedRating = rating;
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // REVIEW SUBMISSION
+        function submitReview(event) {
+            event.preventDefault();
+            if (selectedRating === 0) {
+                alert('Please select a rating!');
+                return;
+            }
+            alert(`✅ Thank you for your review!\n\n⭐ Rating: ${selectedRating} stars\n\nYour feedback helps:\n• Other travelers make informed decisions\n• Entrepreneurs improve their services\n• Build a trusted community\n\nYour review will be published after verification within 24 hours.`);
+            event.target.reset();
+            setRating(0);
+        }
+
+        // EDUCATION CONTENT
+        function openEducation(topic) {
+            const articles = {
+                biodiversity: {
+                    title: "🦋 Western Ghats: A Biodiversity Hotspot",
+                    video: "https://www.youtube.com/embed/tBSzQlmET1A",
+                    content: `
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">Introduction</h3>
+                        <p style="line-height: 1.8; margin-bottom: 1.5rem;">The Western Ghats is one of the world's eight "hottest hotspots" of biological diversity. This UNESCO World Heritage Site spans 1,600 km along the western coast of India and is older than the Himalayas. It plays a crucial role in the ecological stability of the Indian peninsula.</p>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">📊 Incredible Biodiversity Statistics</h3>
+                        <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <ul style="line-height: 2; list-style: none;">
+                                <li><strong>🌺 7,402</strong> species of flowering plants (1,814 endemic)</li>
+                                <li><strong>🐾 139</strong> mammal species (16 endemic)</li>
+                                <li><strong>🦜 508</strong> bird species</li>
+                                <li><strong>🦎 227</strong> reptile species (156 endemic)</li>
+                                <li><strong>🐸 179</strong> amphibian species (138 endemic)</li>
+                                <li><strong>🦋 6,000+</strong> insect species</li>
+                            </ul>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🌟 Endangered Species to Look For</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🐒 Lion-tailed Macaque</h4>
+                                <p style="font-size: 0.9rem;">Endemic primate found only in Western Ghats rainforests</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🦌 Nilgiri Tahr</h4>
+                                <p style="font-size: 0.9rem;">Mountain goat found in high-altitude grasslands</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🐿️ Malabar Giant Squirrel</h4>
+                                <p style="font-size: 0.9rem;">Colorful, large squirrel unique to the region</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🦜 Great Indian Hornbill</h4>
+                                <p style="font-size: 0.9rem;">Large bird crucial for seed dispersal</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🌿 Unique Ecosystems in Satara</h3>
+                        <p style="line-height: 1.8; margin-bottom: 1rem;"><strong>Kaas Plateau (Valley of Flowers):</strong> A UNESCO World Natural Heritage Site famous for its seasonal wildflower blooms. Over 850 species of flowering plants, many endemic to the region. Best time to visit: August-September.</p>
+                        
+                        <p style="line-height: 1.8; margin-bottom: 1rem;"><strong>Koyna Wildlife Sanctuary:</strong> Home to Bengal tigers, Indian leopards, sloth bears, and over 270 bird species. Dense evergreen and semi-evergreen forests.</p>
+
+                        <p style="line-height: 1.8; margin-bottom: 1.5rem;"><strong>Chandoli National Park:</strong> Part of the Sahyadri Tiger Reserve, protecting corridors for wildlife movement between protected areas.</p>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">✅ Conservation Efforts</h3>
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #4a7c2c; margin-bottom: 1.5rem;">
+                            <ul style="line-height: 2;">
+                                <li><strong>Protected Areas:</strong> 20% of the Western Ghats is under protection</li>
+                                <li><strong>Community Conservation:</strong> Local communities involved in forest protection</li>
+                                <li><strong>Eco-tourism Programs:</strong> Your visit supports wildlife protection</li>
+                                <li><strong>Research Stations:</strong> Continuous monitoring of biodiversity</li>
+                                <li><strong>Habitat Restoration:</strong> Reforestation and corridor creation projects</li>
+                            </ul>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🤝 How You Can Help</h3>
+                        <div style="background: #fff3cd; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #ffd700;">
+                            <ul style="line-height: 2;">
+                                <li>Choose eco-certified stays that support conservation</li>
+                                <li>Support local conservation projects</li>
+                                <li>Follow responsible wildlife viewing guidelines</li>
+                                <li>Educate others about endemic species</li>
+                                <li>Never disturb wildlife or their habitats</li>
+                                <li>Report any illegal activities to forest authorities</li>
+                            </ul>
+                        </div>
+                    `
+                },
+                sustainability: {
+                    title: "♻️ Sustainable Tourism Practices",
+                    video: "https://www.youtube.com/embed/2qVdrmYzu8Q",
+                    content: `
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">Why Sustainable Tourism Matters</h3>
+                        <p style="line-height: 1.8; margin-bottom: 1.5rem;">Tourism is one of the fastest-growing industries globally, but it can have significant environmental impacts. Sustainable tourism ensures that destinations remain beautiful and viable for future generations while supporting local communities.</p>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🌍 Transportation & Carbon Footprint</h3>
+                        <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <h4 style="color: #4a7c2c; margin-bottom: 0.5rem;">Choose Green Transport:</h4>
+                            <ul style="line-height: 2;">
+                                <li><strong>Public Transport:</strong> Use buses and trains instead of private cars</li>
+                                <li><strong>Shared Rides:</strong> Carpool with other travelers</li>
+                                <li><strong>Electric Vehicles:</strong> Opt for EV rentals when available</li>
+                                <li><strong>Walking & Cycling:</strong> Best for short distances and exploring local areas</li>
+                                <li><strong>Carbon Offset:</strong> Calculate and offset your travel emissions</li>
+                            </ul>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">♻️ Waste Management</h3>
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <h4 style="color: #4a7c2c; margin-bottom: 0.5rem;">Zero-Waste Travel Tips:</h4>
+                            <ul style="line-height: 2;">
+                                <li><strong>Carry Reusables:</strong> Water bottles, bags, utensils, and straws</li>
+                                <li><strong>Refuse Plastics:</strong> Say no to single-use plastics</li>
+                                <li><strong>Proper Disposal:</strong> Segregate wet and dry waste</li>
+                                <li><strong>Clean-up Drives:</strong> Participate in local conservation efforts</li>
+                                <li><strong>Packaging:</strong> Avoid over-packaged products</li>
+                            </ul>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">💧 Water Conservation</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🚿 Shorter Showers</h4>
+                                <p style="font-size: 0.9rem;">Limit showers to 5 minutes or less</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🧺 Reuse Towels</h4>
+                                <p style="font-size: 0.9rem;">Use towels multiple times before washing</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">🚰 Report Leaks</h4>
+                                <p style="font-size: 0.9rem;">Notify staff of any water leakage</p>
+                            </div>
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; border: 2px solid #4a7c2c;">
+                                <h4 style="color: #4a7c2c;">💧 Mindful Use</h4>
+                                <p style="font-size: 0.9rem;">Turn off taps when not in use</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🌱 Wildlife & Nature Etiquette</h3>
+                        <div style="background: #fff3cd; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #ffd700; margin-bottom: 1.5rem;">
+                            <h4 style="color: #4a7c2c; margin-bottom: 0.5rem;">Responsible Wildlife Viewing:</h4>
+                            <ul style="line-height: 2;">
+                                <li><strong>Safe Distance:</strong> Maintain at least 50 meters from wildlife</li>
+                                <li><strong>No Feeding:</strong> Never feed wild animals</li>
+                                <li><strong>Stay on Trails:</strong> Don't venture into restricted areas</li>
+                                <li><strong>No Littering:</strong> Pack out everything you pack in</li>
+                                <li><strong>Quiet Observation:</strong> Minimize noise and disturbance</li>
+                                <li><strong>No Flash Photography:</strong> Can disturb nocturnal animals</li>
+                                <li><strong>Respect Plants:</strong> Don't pick flowers or damage vegetation</li>
+                            </ul>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🏡 Supporting Local Communities</h3>
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <ul style="line-height: 2;">
+                                <li><strong>Buy Local:</strong> Purchase from local artisans and farmers</li>
+                                <li><strong>Eat Local:</strong> Choose local restaurants and street food</li>
+                                <li><strong>Hire Local:</strong> Book local guides and services</li>
+                                <li><strong>Respect Culture:</strong> Learn about and honor local traditions</li>
+                                <li><strong>Fair Prices:</strong> Pay fair prices without excessive bargaining</li>
+                                <li><strong>Learn Language:</strong> Learn basic local phrases</li>
+                            </ul>
+                        </div>
+
+                        <div style="background: #4a7c2c; color: #fff; padding: 2rem; border-radius: 10px; text-align: center; margin-top: 2rem;">
+                            <h3 style="margin-bottom: 1rem;">🌟 Remember</h3>
+                            <p style="font-size: 1.2rem; font-style: italic;">"Take only memories, leave only footprints"</p>
+                        </div>
+                    `
+                },
+                farming: {
+                    title: "🌱 Organic Farming Techniques",
+                    video: "https://www.youtube.com/embed/IhWuN87fM5Q",
+                    content: `
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">Introduction to Organic Farming</h3>
+                        <p style="line-height: 1.8; margin-bottom: 1.5rem;">Organic farming is an agricultural system that uses ecologically based pest controls and biological fertilizers derived largely from animal and plant wastes. Learn the traditional wisdom passed down through generations of Satara farmers.</p>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🌾 Crop Rotation System</h3>
+                        <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <p style="margin-bottom: 1rem;"><strong>What is it?</strong> Growing different crops in sequence on the same land to maintain soil health and prevent pest build-up.</p>
+                            
+                            <h4 style="color: #4a7c2c; margin-bottom: 0.5rem;">Example 4-Year Rotation:</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px;">
+                                    <strong>Year 1: Legumes</strong>
+                                    <p style="font-size: 0.9rem;">Beans, peas - Add nitrogen to soil</p>
+                                </div>
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px;">
+                                    <strong>Year 2: Leafy Vegetables</strong>
+                                    <p style="font-size: 0.9rem;">Spinach, lettuce - Use nitrogen</p>
+                                </div>
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px;">
+                                    <strong>Year 3: Root Vegetables</strong>
+                                    <p style="font-size: 0.9rem;">Carrots, radish - Break up soil</p>
+                                </div>
+                                <div style="background: #fff; padding: 1rem; border-radius: 8px;">
+                                    <strong>Year 4: Fruiting Crops</strong>
+                                    <p style="font-size: 0.9rem;">Tomatoes, peppers - Heavy feeders</p>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #e8f5e9; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                                <strong>Benefits:</strong> Prevents soil depletion, reduces pests, improves fertility, minimizes disease
+                            </div>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🐛 Natural Pest Control</h3>
+                        <div style="background: #fff3cd; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #ffd700; margin-bottom: 1.5rem;">
+                            <h4 style="color: #4a7c2c; margin-bottom: 1rem;">Traditional Pest Control Methods:</h4>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <strong>🌿 Neem Oil Spray:</strong>
+                                <p style="margin-left: 1rem; line-height: 1.6;">Mix 5ml neem oil + 1 liter water + 1ml liquid soap. Spray on plants weekly. Effective against aphids, mites, and whiteflies.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <strong>🌶️ Garlic-Chili Spray:</strong>
+                                <p style="margin-left: 1rem; line-height: 1.6;">Blend 10 garlic cloves + 5 hot chilies + 1 liter water. Strain and spray. Repels most insects naturally.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <strong>🐞 Beneficial Insects:</strong>
+                                <p style="margin-left: 1rem; line-height: 1.6;">Encourage ladybugs, praying mantis, and lacewings. They eat harmful pests naturally.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 1rem;">
+                                <strong>🌼 Companion Planting:</strong>
+                                <p style="margin-left: 1rem; line-height: 1.6;">Marigolds repel aphids, tomato hornworms. Basil protects tomatoes. Mint deters cabbage moths.</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">♻️ Composting Methods</h3>
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                            <h4 style="color: #4a7c2c; margin-bottom: 1rem;">Types of Composting:</h4>
+                            
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <strong>🍂 Kitchen Waste Composting:</strong>
+                                <ul style="margin-left: 1rem; line-height: 1.8;">
+                                    <li>Layer green waste (vegetables, fruits) with brown waste (dry leaves, paper)</li>
+                                    <li>Maintain moisture like a wrung-out sponge</li>
+                                    <li>Turn weekly for aeration</li>
+                                    <li>Ready in 2-3 months</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                                <strong>🪱 Vermicomposting (Earthworms):</strong>
+                                <ul style="margin-left: 1rem; line-height: 1.8;">
+                                    <li>Red wiggler worms convert organic waste to nutrient-rich compost</li>
+                                    <li>Faster than traditional composting (1-2 months)</li>
+                                    <li>Produces liquid fertilizer (worm tea)</li>
+                                    <li>Can be done indoors or outdoors</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="background: #fff; padding: 1rem; border-radius: 8px;">
+                                <strong>🌾 Green Manure Crops:</strong>
+                                <ul style="margin-left: 1rem; line-height: 1.8;">
+                                    <li>Grow crops like clover, alfalfa specifically for plowing back into soil</li>
+                                    <li>Adds organic matter and nutrients</li>
+                                    <li>Improves soil structure and water retention</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">💧 Water Management</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                            <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="color: #4a7c2c;">💧 Drip Irrigation</h4>
+                                <p style="line-height: 1.6;">Water directly to plant roots, saves 40-70% water, reduces disease</p>
+                            </div>
+                            <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="color: #4a7c2c;">🍂 Mulching</h4>
+                                <p style="line-height: 1.6;">Cover soil with organic matter, retains moisture, prevents weeds, regulates temperature</p>
+                            </div>
+                            <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="color: #4a7c2c;">🌧️ Rainwater Harvesting</h4>
+                                <p style="line-height: 1.6;">Collect and store rainwater, reduces dependency on groundwater</p>
+                            </div>
+                            <div style="background: #f0f8f0; padding: 1.5rem; border-radius: 10px;">
+                                <h4 style="color: #4a7c2c;">🏞️ Farm Ponds</h4>
+                                <p style="line-height: 1.6;">Store water for dry season, recharge groundwater, support aquaculture</p>
+                            </div>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">🌿 Soil Health Management</h3>
+                        <div style="background: #fff3cd; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #ffd700; margin-bottom: 1.5rem;">
+                            <ul style="line-height: 2;">
+                                <li><strong>No Chemical Fertilizers:</strong> Use only organic compost and manure</li>
+                                <li><strong>Organic Matter:</strong> Add compost regularly to improve soil structure</li>
+                                <li><strong>Minimal Tillage:</strong> Reduce soil disturbance to preserve microorganisms</li>
+                                <li><strong>Cover Crops:</strong> Grow crops to protect and enrich soil between main crops</li>
+                                <li><strong>pH Balance:</strong> Test and maintain optimal soil pH (6.0-7.0 for most crops)</li>
+                                <li><strong>Microbial Health:</strong> Promote beneficial bacteria and fungi</li>
+                            </ul>
+                        </div>
+
+                        <h3 style="color: #2d5016; margin-bottom: 1rem;">✅ Benefits of Organic Farming</h3>
+                        <div style="background: #4a7c2c; color: #fff; padding: 2rem; border-radius: 10px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                                <div>
+                                    <strong style="font-size: 1.1rem;">🌱 For Environment</strong>
+                                    <ul style="margin-top: 0.5rem; line-height: 1.8;">
+                                        <li>No chemical pollution</li>
+                                        <li>Soil conservation</li>
+                                        <li>Water conservation</li>
+                                        <li>Biodiversity protection</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="font-size: 1.1rem;">💪 For Health</strong>
+                                    <ul style="margin-top: 0.5rem; line-height: 1.8;">
+                                        <li>Chemical-free food</li>
+                                        <li>Higher nutrients</li>
+                                        <li>Better taste</li>
+                                        <li>No pesticide residue</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong style="font-size: 1.1rem;">💰 For Farmers</strong>
+                                    <ul style="margin-top: 0.5rem; line-height: 1.8;">
+                                        <li>Higher income</li>
+                                        <li>Lower input costs</li>
+                                        <li>Premium prices</li>
+                                        <li>Sustainable livelihoods</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background: #e8f5e9; padding: 2rem; border-radius: 10px; text-align: center; margin-top: 2rem;">
+                            <h3 style="color: #2d5016; margin-bottom: 1rem;">🤝 Join Our Farm Experience Program!</h3>
+                            <p style="line-height: 1.8; margin-bottom: 1rem;">Learn hands-on organic farming techniques directly from Satara farmers. Stay at organic farms, participate in daily activities, and understand sustainable agriculture.</p>
+                            <button class="btn btn-primary" onclick="closeArticleModal(); document.querySelector('#booking').scrollIntoView({ behavior: 'smooth' });">Book Farm Experience</button>
+                        </div>
+                    `
+                }
+            };
+
+            const article = articles[topic];
+            const articleContent = document.getElementById('articleContent');
+            
+            articleContent.innerHTML = `
+                <h2 style="color: #2d5016; margin-bottom: 1.5rem;">${article.title}</h2>
+                
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; margin-bottom: 2rem; background: #000;">
+                    <iframe src="${article.video}" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                            title="${article.title}" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                
+                <div style="line-height: 1.8; color: #333;">
+                    ${article.content}
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: #f0f8f0; border-radius: 10px; text-align: center;">
+                    <p style="margin-bottom: 1rem; font-size: 1.1rem;">📚 Want to learn more? Contact our education team!</p>
+                    <p style="color: #666;">📧 education@sataraecotourism.com | 📞 +91 2162 123456</p>
+                </div>
+            `;
+            
+            document.getElementById('articleModal').classList.add('active');
+        }
+
+        function closeArticleModal() {
+            document.getElementById('articleModal').classList.remove('active');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Set minimum dates
+        const today = new Date().toISOString().split('T')[0];
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkinInputs = document.querySelectorAll('input[name="checkin"]');
+            const checkoutInputs = document.querySelectorAll('input[name="checkout"]');
+            
+            checkinInputs.forEach(input => {
+                input.setAttribute('min', today);
+                input.addEventListener('change', function() {
+                    checkoutInputs.forEach(out => out.setAttribute('min', this.value));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
